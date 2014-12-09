@@ -6,6 +6,7 @@ import (
 	"github.com/kakaryan/goservice/service"
 	"log"
 	"math/rand"
+	"runtime"
 	"time"
 	// "net"
 	// "os"
@@ -17,6 +18,7 @@ import (
 func init() {
 	log.SetFlags(log.Lmicroseconds | log.Lshortfile)
 	log.SetPrefix(fmt.Sprintf("pid:%d ", syscall.Getpid()))
+	runtime.GOMAXPROCS(runtime.NumCPU())
 }
 
 func main() {
@@ -34,7 +36,7 @@ func handleRpc(req *service.Request) *service.Response {
 	t := rand.Intn(10)
 	nums := []int{21, 22, 23, 24, 25, 26, 27, 28, 29, 30}
 	sleep := time.Duration(nums[t]) * time.Second
-	res := fmt.Sprintf("sleep for %d second", sleep/time.Second)
+	res := fmt.Sprintf("sleep for %d second\n", sleep/time.Second)
 	response.Data = []byte(res)
 	log.Printf("response is %s", response.Data)
 	time.Sleep(sleep)

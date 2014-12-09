@@ -6,6 +6,10 @@ import (
 	"log"
 )
 
+type Transmitter interface {
+	Encode()
+}
+
 type RequestHandler interface {
 	HandleMessage(io.Writer, *service.Request) *service.Response
 }
